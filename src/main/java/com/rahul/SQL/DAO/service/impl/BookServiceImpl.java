@@ -1,22 +1,34 @@
 package com.rahul.SQL.DAO.service.impl;
 
 import com.rahul.SQL.DAO.domain.BookEntity;
+import com.rahul.SQL.DAO.repo.BookRepository;
 import com.rahul.SQL.DAO.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+@Component
 public class BookServiceImpl implements BookService {
+
+    @Autowired
+    private BookRepository bookRepository;
+
     @Override
     public BookEntity createUpdateBook(String isbn, BookEntity book) {
-        return null;
+        book.setIsbn(isbn);
+        return bookRepository.save(book);
     }
 
     @Override
     public List<BookEntity> findAll() {
-        return null;
+        return new ArrayList<>(bookRepository.findAll());
     }
 
     @Override
@@ -26,21 +38,26 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<BookEntity> findOne(String isbn) {
-        return Optional.empty();
+        return bookRepository.findById(isbn);
     }
 
     @Override
     public boolean isExists(String isbn) {
-        return false;
+        return bookRepository.existsById(isbn);
     }
 
     @Override
     public BookEntity partialUpdate(String isbn, BookEntity bookEntity) {
-        return null;
+        bookEntity.setIsbn(isbn);
+        return bookRepository.findById(isbn).map(existingBook -> {
+            Optional.ofNullable(bookEntity.getAuthorEntity()).ifPresent(existingBook::setAuthorEntity);
+            Optional.ofNullable(bookEntity.getTitle()).ifPresent(existingBook::setTitle);
+            return bookRepository.save(existingBook);
+        }).orElseThrow(() -> new RuntimeException("Book does not exists"));
     }
 
     @Override
     public void delete(String isbn) {
-
+        bookRepository.deleteById(isbn);
     }
 }

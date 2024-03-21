@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthorMapperImpl implements Mapper<AuthorEntity, AuthorDTO> {
+public class AuthorMapper implements Mapper<AuthorEntity, AuthorDTO> {
 
     @Autowired
     private ModelMapper modelMapper;

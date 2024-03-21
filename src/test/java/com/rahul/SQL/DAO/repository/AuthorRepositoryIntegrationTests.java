@@ -27,14 +27,14 @@ public class AuthorRepositoryIntegrationTests {
 
     @Test
     public void testCreateAuthorWithId() {
-        final AuthorEntity authorEntity = createTestAuthorA();
+        final AuthorEntity authorEntity = createTestAuthorEntityA();
         final AuthorEntity savedAuthorEntity = underTest.save(authorEntity);
         assertThat(authorEntity).isEqualTo(savedAuthorEntity);
     }
 
     @Test
     public void testCreateAuthorWithoutId() {
-        final AuthorEntity authorEntity = createTestAuthorA();
+        final AuthorEntity authorEntity = createTestAuthorEntityA();
         authorEntity.setId(null);
         final AuthorEntity savedAuthorEntity = underTest.save(authorEntity);
         assertThat(authorEntity).isEqualTo(savedAuthorEntity);
@@ -51,7 +51,7 @@ public class AuthorRepositoryIntegrationTests {
 
     @Test
     public void testCreateAndFindAllAuthors() {
-        final AuthorEntity testAuthorAEntity = underTest.save(createTestAuthorA());
+        final AuthorEntity testAuthorAEntity = underTest.save(createTestAuthorEntityA());
         final AuthorEntity testAuthorBEntity = underTest.save(createTestAuthorB());
         final AuthorEntity testAuthorCEntity = underTest.save(createTestAuthorC());
         final List<AuthorEntity> expected = List.of(testAuthorAEntity, testAuthorBEntity, testAuthorCEntity);
@@ -62,7 +62,7 @@ public class AuthorRepositoryIntegrationTests {
 
     @Test
     public void testCreateUpdateAuthor() {
-        final AuthorEntity testAuthorAEntity = underTest.save(createTestAuthorA());
+        final AuthorEntity testAuthorAEntity = underTest.save(createTestAuthorEntityA());
         testAuthorAEntity.setName("Updated");
         underTest.save(testAuthorAEntity);
         final Optional<AuthorEntity> result = underTest.findById(testAuthorAEntity.getId());
@@ -72,7 +72,7 @@ public class AuthorRepositoryIntegrationTests {
 
     @Test
     public void testCreateDeleteAuthor() {
-        final AuthorEntity testAuthorAEntity = underTest.save(createTestAuthorA());
+        final AuthorEntity testAuthorAEntity = underTest.save(createTestAuthorEntityA());
         final Optional<AuthorEntity> saveResult = underTest.findById(testAuthorAEntity.getId());
         assertThat(saveResult).isPresent();
 
@@ -83,7 +83,7 @@ public class AuthorRepositoryIntegrationTests {
 
     @Test
     public void testThatGetAuthorsWithAgeLessThan() {
-        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorEntityA();
         underTest.save(testAuthorAEntity);
         AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorB();
         underTest.save(testAuthorBEntity);
@@ -96,7 +96,7 @@ public class AuthorRepositoryIntegrationTests {
 
     @Test
     public void testThatGetAuthorsWithAgeGreaterThan() {
-        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorEntityA();
         underTest.save(testAuthorAEntity);
         AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorB();
         underTest.save(testAuthorBEntity);

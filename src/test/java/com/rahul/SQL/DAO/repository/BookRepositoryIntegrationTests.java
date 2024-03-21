@@ -30,16 +30,16 @@ public class BookRepositoryIntegrationTests {
 
     @Test
     public void testCreateBook() {
-        final AuthorEntity authorEntity = createTestAuthorA();
-        final BookEntity bookEntity = createTestBookA(authorEntity);
+        final AuthorEntity authorEntity = createTestAuthorEntityA();
+        final BookEntity bookEntity = createTestBookEntityA(authorEntity);
         final BookEntity result = underTest.save(bookEntity);
         assertThat(result).isEqualTo(bookEntity);
     }
 
     @Test
     public void testCreateAndFindBook() {
-        final AuthorEntity authorEntity = createTestAuthorA();
-        final BookEntity bookEntity = createTestBookA(authorEntity);
+        final AuthorEntity authorEntity = createTestAuthorEntityA();
+        final BookEntity bookEntity = createTestBookEntityA(authorEntity);
         final BookEntity savedBookEntity = underTest.save(bookEntity);
         final Optional<BookEntity> result = underTest.findById(savedBookEntity.getIsbn());
         assertThat(result).isPresent();
@@ -48,8 +48,8 @@ public class BookRepositoryIntegrationTests {
 
     @Test
     public void testCreateAndFindAllBook() {
-        final AuthorEntity authorEntity = createTestAuthorA();
-        final BookEntity savedBookAEntity = underTest.save(createTestBookA(authorEntity));
+        final AuthorEntity authorEntity = createTestAuthorEntityA();
+        final BookEntity savedBookAEntity = underTest.save(createTestBookEntityA(authorEntity));
         final BookEntity savedBookBEntity = underTest.save(createTestBookB(authorEntity));
         final BookEntity savedBookCEntity = underTest.save(createTestBookC(authorEntity));
         final List<BookEntity> expected = List.of(savedBookAEntity, savedBookBEntity, savedBookCEntity);
@@ -60,8 +60,8 @@ public class BookRepositoryIntegrationTests {
 
     @Test
     public void testCreateUpdateBook() {
-        final AuthorEntity authorEntity = createTestAuthorA();
-        final BookEntity savedBookEntity = underTest.save(createTestBookA(authorEntity));
+        final AuthorEntity authorEntity = createTestAuthorEntityA();
+        final BookEntity savedBookEntity = underTest.save(createTestBookEntityA(authorEntity));
         savedBookEntity.setTitle("A new title");
         underTest.save(savedBookEntity);
 
@@ -72,8 +72,8 @@ public class BookRepositoryIntegrationTests {
 
     @Test
     public void testCreateDeleteBook() {
-        final AuthorEntity authorEntity = createTestAuthorA();
-        final BookEntity savedBookEntity = underTest.save(createTestBookA(authorEntity));
+        final AuthorEntity authorEntity = createTestAuthorEntityA();
+        final BookEntity savedBookEntity = underTest.save(createTestBookEntityA(authorEntity));
         final Optional<BookEntity> saveResult = underTest.findById(savedBookEntity.getIsbn());
         assertThat(saveResult).isPresent();
 

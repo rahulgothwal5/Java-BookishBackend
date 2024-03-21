@@ -1,10 +1,10 @@
 package com.rahul.SQL.DAO.controllers;
 
-import com.devtiro.database.TestDataUtil;
-import com.devtiro.database.domain.dto.AuthorDto;
-import com.devtiro.database.domain.entities.AuthorEntity;
-import com.devtiro.database.services.AuthorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rahul.SQL.DAO.TestDataUtil;
+import com.rahul.SQL.DAO.domain.AuthorEntity;
+import com.rahul.SQL.DAO.domain.dto.AuthorDTO;
+import com.rahul.SQL.DAO.service.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class AuthorControllerIntegrationTests {
 
     @Test
     public void testThatCreateAuthorSuccessfullyReturnsSavedAuthor() throws Exception {
-        AuthorDto testAuthorA = TestDataUtil.createTestAuthorDtoA();
+        AuthorDTO testAuthorA = TestDataUtil.createTestAuthorDTOA();
         testAuthorA.setId(null);
         String authorJson = objectMapper.writeValueAsString(testAuthorA);
 
@@ -133,12 +133,12 @@ public class AuthorControllerIntegrationTests {
 
     @Test
     public void testThatFullUpdateAuthorReturnsHttpStatus404WhenNoAuthorExists() throws Exception {
-        AuthorDto testAuthorDtoA = TestDataUtil.createTestAuthorDtoA();
-        String authorDtoJson = objectMapper.writeValueAsString(testAuthorDtoA);
+        AuthorDTO testAuthorDTOA = TestDataUtil.createTestAuthorDTOA();
+        String AuthorDTOJson = objectMapper.writeValueAsString(testAuthorDTOA);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/authors/99")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(authorDtoJson)
+                        .content(AuthorDTOJson)
         ).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -147,13 +147,13 @@ public class AuthorControllerIntegrationTests {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
         AuthorEntity savedAuthor = authorService.save(testAuthorEntityA);
 
-        AuthorDto testAuthorDtoA = TestDataUtil.createTestAuthorDtoA();
-        String authorDtoJson = objectMapper.writeValueAsString(testAuthorDtoA);
+        AuthorDTO testAuthorDTOA = TestDataUtil.createTestAuthorDTOA();
+        String AuthorDTOJson = objectMapper.writeValueAsString(testAuthorDTOA);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/authors/" + savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(authorDtoJson)
+                        .content(AuthorDTOJson)
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -162,21 +162,21 @@ public class AuthorControllerIntegrationTests {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
         AuthorEntity savedAuthor = authorService.save(testAuthorEntityA);
 
-        AuthorEntity authorDto = TestDataUtil.createTestAuthorB();
-        authorDto.setId(savedAuthor.getId());
+        AuthorEntity AuthorDTO = TestDataUtil.createTestAuthorB();
+        AuthorDTO.setId(savedAuthor.getId());
 
-        String authorDtoUpdateJson = objectMapper.writeValueAsString(authorDto);
+        String AuthorDTOUpdateJson = objectMapper.writeValueAsString(AuthorDTO);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/authors/" + savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(authorDtoUpdateJson)
+                        .content(AuthorDTOUpdateJson)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.id").value(savedAuthor.getId())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.name").value(authorDto.getName())
+                MockMvcResultMatchers.jsonPath("$.name").value(AuthorDTO.getName())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.age").value(authorDto.getAge())
+                MockMvcResultMatchers.jsonPath("$.age").value(AuthorDTO.getAge())
         );
     }
 
@@ -185,14 +185,14 @@ public class AuthorControllerIntegrationTests {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
         AuthorEntity savedAuthor = authorService.save(testAuthorEntityA);
 
-        AuthorDto testAuthorDtoA = TestDataUtil.createTestAuthorDtoA();
-        testAuthorDtoA.setName("UPDATED");
-        String authorDtoJson = objectMapper.writeValueAsString(testAuthorDtoA);
+        AuthorDTO testAuthorDTOA = TestDataUtil.createTestAuthorDTOA();
+        testAuthorDTOA.setName("UPDATED");
+        String AuthorDTOJson = objectMapper.writeValueAsString(testAuthorDTOA);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.patch("/authors/" + savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(authorDtoJson)
+                        .content(AuthorDTOJson)
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -201,20 +201,20 @@ public class AuthorControllerIntegrationTests {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
         AuthorEntity savedAuthor = authorService.save(testAuthorEntityA);
 
-        AuthorDto testAuthorDtoA = TestDataUtil.createTestAuthorDtoA();
-        testAuthorDtoA.setName("UPDATED");
-        String authorDtoJson = objectMapper.writeValueAsString(testAuthorDtoA);
+        AuthorDTO testAuthorDTOA = TestDataUtil.createTestAuthorDTOA();
+        testAuthorDTOA.setName("UPDATED");
+        String AuthorDTOJson = objectMapper.writeValueAsString(testAuthorDTOA);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.patch("/authors/" + savedAuthor.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(authorDtoJson)
+                        .content(AuthorDTOJson)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.id").value(savedAuthor.getId())
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.name").value("UPDATED")
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.age").value(testAuthorDtoA.getAge())
+                MockMvcResultMatchers.jsonPath("$.age").value(testAuthorDTOA.getAge())
         );
     }
 

@@ -1,10 +1,10 @@
 package com.rahul.SQL.DAO.controllers;
 
-import com.devtiro.database.TestDataUtil;
-import com.devtiro.database.domain.dto.BookDto;
-import com.devtiro.database.domain.entities.BookEntity;
-import com.devtiro.database.services.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rahul.SQL.DAO.TestDataUtil;
+import com.rahul.SQL.DAO.domain.BookEntity;
+import com.rahul.SQL.DAO.domain.dto.BookDTO;
+import com.rahul.SQL.DAO.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class BooksControllerIntegrationTests {
 
     @Test
     public void testThatCreateBookReturnsHttpStatus201Created() throws Exception {
-        BookDto testBookA = TestDataUtil.createTestBookDtoA(null);
+        BookDTO testBookA = TestDataUtil.createTestBookDTOA(null);
         String bookJson = objectMapper.writeValueAsString(testBookA);
 
         mockMvc.perform(
@@ -57,7 +57,7 @@ public class BooksControllerIntegrationTests {
                 testBookEntityA.getIsbn(), testBookEntityA
         );
 
-        BookDto testBookA = TestDataUtil.createTestBookDtoA(null);
+        BookDTO testBookA = TestDataUtil.createTestBookDTOA(null);
         testBookA.setIsbn(savedBookEntity.getIsbn());
         String bookJson = objectMapper.writeValueAsString(testBookA);
 
@@ -72,7 +72,7 @@ public class BooksControllerIntegrationTests {
 
     @Test
     public void testThatCreateBookReturnsCreatedBook() throws Exception {
-        BookDto testBookA = TestDataUtil.createTestBookDtoA(null);
+        BookDTO testBookA = TestDataUtil.createTestBookDTOA(null);
         String bookJson = objectMapper.writeValueAsString(testBookA);
 
         mockMvc.perform(
@@ -93,7 +93,7 @@ public class BooksControllerIntegrationTests {
                 testBookEntityA.getIsbn(), testBookEntityA
         );
 
-        BookDto testBookA = TestDataUtil.createTestBookDtoA(null);
+        BookDTO testBookA = TestDataUtil.createTestBookDTOA(null);
         testBookA.setIsbn(savedBookEntity.getIsbn());
         testBookA.setTitle("UPDATED");
         String bookJson = objectMapper.writeValueAsString(testBookA);
@@ -164,7 +164,7 @@ public class BooksControllerIntegrationTests {
         BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
         bookService.createUpdateBook(testBookEntityA.getIsbn(), testBookEntityA);
 
-        BookDto testBookA = TestDataUtil.createTestBookDtoA(null);
+        BookDTO testBookA = TestDataUtil.createTestBookDTOA(null);
         testBookA.setTitle("UPDATED");
         String bookJson = objectMapper.writeValueAsString(testBookA);
 
@@ -182,7 +182,7 @@ public class BooksControllerIntegrationTests {
         BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
         bookService.createUpdateBook(testBookEntityA.getIsbn(), testBookEntityA);
 
-        BookDto testBookA = TestDataUtil.createTestBookDtoA(null);
+        BookDTO testBookA = TestDataUtil.createTestBookDTOA(null);
         testBookA.setTitle("UPDATED");
         String bookJson = objectMapper.writeValueAsString(testBookA);
 
