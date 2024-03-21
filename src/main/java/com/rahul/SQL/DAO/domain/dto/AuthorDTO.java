@@ -1,4 +1,4 @@
-package com.rahul.SQL.DAO.domain;
+package com.rahul.SQL.DAO.domain.dto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "author")
-public class Author {
+public class AuthorDTO {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="author_id_seq")
     private Long id;
 
     private String name;

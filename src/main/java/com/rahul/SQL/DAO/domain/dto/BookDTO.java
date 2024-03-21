@@ -1,4 +1,4 @@
-package com.rahul.SQL.DAO.domain;
+package com.rahul.SQL.DAO.domain.dto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,17 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "book")
-public class Book {
+public class BookDTO {
 
-    @Id
     private String isbn;
 
     private String title;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="author_id")
-    private Author author;
+    private AuthorDTO author;
 
 }
